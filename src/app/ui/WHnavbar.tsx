@@ -34,13 +34,6 @@ export default function App() {
     "Log Out",
   ];
 
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set(["text"]));
-
-  const selectedValue = React.useMemo(
-    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-    [selectedKeys],
-  );
-
   const icons = {
     chevron: <IoLanguage />,
   };
@@ -109,9 +102,6 @@ export default function App() {
             itemClasses={{
               base: "gap-4",
             }}
-            selectionMode="single"
-            selectedKeys={selectedKeys}
-            onSelectionChange={setSelectedKeys}
           >
             <DropdownItem key="autoscaling">Thai</DropdownItem>
             <DropdownItem key="usage_metrics">English</DropdownItem>
