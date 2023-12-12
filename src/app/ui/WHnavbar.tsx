@@ -10,7 +10,13 @@ import {
   NavbarContent,
   NavbarItem,
   Link,
+  DropdownMenu,
+  DropdownItem,
+  Dropdown,
+  DropdownTrigger,
+  Button,
 } from "@nextui-org/react";
+import { IoLanguage } from "react-icons/io5";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -27,6 +33,17 @@ export default function App() {
     "Help & Feedback",
     "Log Out",
   ];
+
+  const [selectedKeys, setSelectedKeys] = React.useState(new Set(["text"]));
+
+  const selectedValue = React.useMemo(
+    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+    [selectedKeys],
+  );
+
+  const icons = {
+    chevron: <IoLanguage />,
+  };
 
   return (
     <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
@@ -72,15 +89,34 @@ export default function App() {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          Language
-          {/* <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="warning" href="#" variant="flat">
-            Sign Up
-          </Button> */}
-        </NavbarItem>
+        <Dropdown>
+          <NavbarItem>
+            <DropdownTrigger>
+              <Button
+                disableRipple
+                className="bg-transparent p-0 data-[hover=true]:bg-transparent"
+                endContent={icons.chevron}
+                radius="sm"
+                variant="light"
+              >
+                Language
+              </Button>
+            </DropdownTrigger>
+          </NavbarItem>
+          <DropdownMenu
+            aria-label="Language features"
+            // className="w-[50px]"
+            itemClasses={{
+              base: "gap-4",
+            }}
+            selectionMode="single"
+            selectedKeys={selectedKeys}
+            onSelectionChange={setSelectedKeys}
+          >
+            <DropdownItem key="autoscaling">Thai</DropdownItem>
+            <DropdownItem key="usage_metrics">English</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </NavbarContent>
 
       <NavbarMenu>
